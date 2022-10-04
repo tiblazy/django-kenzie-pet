@@ -9,6 +9,7 @@ from traits.models import Trait
 from groups.serializers import GroupSerializer
 from traits.serializers import TraitSerializer
 
+from math import log
 class ValidationFieldError(APIException):
     status_code = 422
     default_value = 'unprocessable_entity'
@@ -23,7 +24,13 @@ class AnimalSerializer(serializers.Serializer):
     traits = TraitSerializer(many = True)
     group = GroupSerializer()
 
-    def create(self, validated_data: dict):
+    age_in_human_years = serializers.SerializerMethodField('get_convert_dog_age_to_human_years')
+    def get_convert_dog_age_to_human_years(self, animal) -> int:
+        human_age = 16 * log(animal.age) + 31
+        
+        return human_age
+        
+    def create(self, validated_data: dict) -> dict:
         trait_data = validated_data.pop('traits')
         group_data = validated_data.pop('group')
 
@@ -36,7 +43,7 @@ class AnimalSerializer(serializers.Serializer):
         
         return animal
     
-    def update(self, instance: Animal, validated_data: dict):
+    def update(self, instance: Animal, validated_data: dict) -> dict:
         exclude = ('traits', 'group', 'sex')
         errors = {}
         
