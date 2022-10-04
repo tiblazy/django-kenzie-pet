@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import Animal
 from .serializers import AnimalSerializer
 
-class AnimalMultiplyView(APIView):
+class AnimalView(APIView):
     def get(self, _: Request):
         
         all_animals = Animal.objects.all()
@@ -20,7 +20,7 @@ class AnimalMultiplyView(APIView):
 
         return Response(serializer.data, status.HTTP_201_CREATED)
     
-class AnimalUpdateView(APIView):
+class AnimalCRUDView(APIView):
     def patch(self, request: Request, animal_id: int):
         animal = get_object_or_404(Animal, pk = animal_id)
         
