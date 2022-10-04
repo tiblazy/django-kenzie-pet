@@ -3,11 +3,11 @@ from django.db import models
 
 class AnimalSex(models.TextChoices):
     MALE = 'Macho'
-    FEMALE = 'Femea'
-    OTHER = 'Não Informado'
+    FEMALE = 'Fêmea'
+    DEFAULT = 'Não Informado'
     
 class Animal(models.Model):
-    name = models.CharField(max_length = 50, unique = True)
+    name = models.CharField(max_length = 50)
     age = models.IntegerField() 
     weight = models.FloatField()
     sex = models.CharField(max_length = 15)
