@@ -20,7 +20,7 @@ class TraitModelTest(TestCase):
         
         self.assertTrue(unique)
         
-    def test_name_can_be_null_or_blank(self):
+    def test_name_can_be_null_or_blank(self) -> None:
         nullable = self.trait._meta.get_field("name").null
         blankable = self.trait._meta.get_field("name").blank
 

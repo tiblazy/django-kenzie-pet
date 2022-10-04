@@ -10,7 +10,7 @@ class GroupModelTest(TestCase):
         }
         
         cls.group = Group.objects.create(**cls.group_data)
-        
+    
     def test_name_max_length(self) -> None:
         max_length = self.group._meta.get_field('name').max_length
         
@@ -21,7 +21,7 @@ class GroupModelTest(TestCase):
         
         self.assertTrue(unique)
     
-    def test_name_can_be_null_or_blank(self):
+    def test_name_can_be_null_or_blank(self) -> None:
         nullable = self.group._meta.get_field("name").null
         blankable = self.group._meta.get_field("name").blank
 
@@ -38,7 +38,7 @@ class GroupModelTest(TestCase):
         
         self.assertTrue(unique)
         
-    def test_scientific_name_can_be_null_or_blank(self):
+    def test_scientific_name_can_be_null_or_blank(self) -> None:
         nullable = self.group._meta.get_field("scientific_name").null
         blankable = self.group._meta.get_field("scientific_name").blank
 
