@@ -9,7 +9,6 @@ from traits.models import Trait
 from groups.serializers import GroupSerializer
 from traits.serializers import TraitSerializer
 
-from math import log
 class ValidationFieldError(APIException):
     status_code = 422
     default_value = 'unprocessable_entity'
