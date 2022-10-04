@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.exceptions import APIException
 
 from animals.models import AnimalSex, Animal
 
@@ -7,6 +8,11 @@ from traits.models import Trait
 
 from groups.serializers import GroupSerializer
 from traits.serializers import TraitSerializer
+
+class ValidationFieldError(APIException):
+    status_code = 422
+    default_value = 'unprocessable_entity'
+    
 class AnimalSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only = True)    
     name = serializers.CharField(max_length = 50)
@@ -29,3 +35,21 @@ class AnimalSerializer(serializers.Serializer):
             animal.traits.add(trait)
         
         return animal
+    
+    def update(self, instance: Animal, validated_data: dict):
+        exclude = ('traits', 'group', 'sex')
+        errors = {}
+        
+        for field, value in validated_data.items():
+            if field in exclude:
+                errors.update({field: f'You can not update {field} property.'})
+                continue
+                            
+            setattr(instance, field, value)
+            
+        if errors:
+            raise ValidationFieldError(errors)
+            
+        instance.save()
+        
+        return instance
