@@ -1,5 +1,6 @@
 from django.db import models
 
+from math import log
 
 class AnimalSex(models.TextChoices):
     MALE = 'Macho'
@@ -14,3 +15,8 @@ class Animal(models.Model):
     
     traits = models.ManyToManyField('traits.Trait', related_name = 'animals')
     group = models.ForeignKey('groups.Group', on_delete = models.CASCADE, related_name = 'animals')
+    
+    def convert_dog_age_to_human_years(self) -> float:
+        human_age = 16 * log(self.age) + 31
+
+        return human_age

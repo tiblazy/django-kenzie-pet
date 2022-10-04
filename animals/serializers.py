@@ -25,11 +25,9 @@ class AnimalSerializer(serializers.Serializer):
     group = GroupSerializer()
 
     age_in_human_years = serializers.SerializerMethodField('get_convert_dog_age_to_human_years')
-    def get_convert_dog_age_to_human_years(self, animal) -> int:
-        human_age = 16 * log(animal.age) + 31
-        
-        return human_age
-        
+    def get_convert_dog_age_to_human_years(self, animal: dict) -> float:
+        return Animal.convert_dog_age_to_human_years(animal)
+
     def create(self, validated_data: dict) -> dict:
         trait_data = validated_data.pop('traits')
         group_data = validated_data.pop('group')
