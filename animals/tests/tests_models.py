@@ -1,4 +1,3 @@
-from sqlite3 import IntegrityError
 from django.test import TestCase
 
 from animals.models import Animal
@@ -42,6 +41,12 @@ class AnimalModelTest(TestCase):
         name_blankable = self.animal._meta.get_field('name').blank
         name_unique = self.animal._meta.get_field('name').unique
 
+        age_nullable = self.animal._meta.get_field('age').null
+        age_blankable = self.animal._meta.get_field('age').blank
+
+        weight_nullable = self.animal._meta.get_field('weight').null
+        weight_blankable = self.animal._meta.get_field('weight').blank        
+
         sex_max_length = self.animal._meta.get_field('sex').max_length
         sex_nullable = self.animal._meta.get_field('sex').null
         sex_blankable = self.animal._meta.get_field('sex').blank
@@ -51,9 +56,15 @@ class AnimalModelTest(TestCase):
         self.assertEqual(animal, self.animal)
 
         self.assertEqual(name_max_length, 50)
-        self.assertFalse(name_nullable)
-        self.assertFalse(name_blankable)
+        self.assertTrue(name_nullable)
+        self.assertTrue(name_blankable)
         self.assertFalse(name_unique)
+        
+        self.assertTrue(age_nullable)
+        self.assertTrue(age_blankable)
+        
+        self.assertTrue(weight_nullable)
+        self.assertTrue(weight_blankable)
         
         self.assertEqual(sex_max_length, 15)
         self.assertFalse(sex_nullable)

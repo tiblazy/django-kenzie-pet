@@ -9,9 +9,9 @@ class AnimalSex(models.TextChoices):
     DEFAULT = 'Não Informado'
     
 class Animal(models.Model):
-    name = models.CharField(max_length = 50)
-    age = models.IntegerField() 
-    weight = models.FloatField()
+    name = models.CharField(max_length = 50, null = True, blank = True)
+    age = models.IntegerField(null = True, blank = True) 
+    weight = models.FloatField(null = True, blank = True)
     sex = models.CharField(max_length = 15, default = AnimalSex.DEFAULT)
     
     traits = models.ManyToManyField('traits.Trait', related_name = 'animals')
