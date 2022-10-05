@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 from math import log
@@ -11,7 +12,7 @@ class Animal(models.Model):
     name = models.CharField(max_length = 50)
     age = models.IntegerField() 
     weight = models.FloatField()
-    sex = models.CharField(max_length = 15)
+    sex = models.CharField(max_length = 15, default = AnimalSex.DEFAULT)
     
     traits = models.ManyToManyField('traits.Trait', related_name = 'animals')
     group = models.ForeignKey('groups.Group', on_delete = models.CASCADE, related_name = 'animals')
