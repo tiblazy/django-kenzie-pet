@@ -12,7 +12,7 @@ class Animal(models.Model):
     name = models.CharField(max_length = 50, null = True, blank = True)
     age = models.IntegerField(null = True, blank = True) 
     weight = models.FloatField(null = True, blank = True)
-    sex = models.CharField(max_length = 15, default = AnimalSex.DEFAULT)
+    sex = models.CharField(max_length = 15, default = AnimalSex.DEFAULT, choices = AnimalSex.choices)
     
     traits = models.ManyToManyField('traits.Trait', related_name = 'animals')
     group = models.ForeignKey('groups.Group', on_delete = models.CASCADE, related_name = 'animals')
